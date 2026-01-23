@@ -179,8 +179,8 @@ if uploaded_file_oss1 and uploaded_file_oss2:
         
         # -------------------- 3G Processing --------------------
         if tech_option in ["3G", "All"]:
-            df_3g_day_oss1 = pd.read_excel(xls, sheet_name="3G_N1_Daily")
-            df_3g_day_oss2 = pd.read_excel(xls, sheet_name="3G_N2_Daily")
+            df_3g_day_oss1 = pd.read_excel(xls, sheet_name="3G_N1")
+            df_3g_day_oss2 = pd.read_excel(xls, sheet_name="3G_N2")
             
             # Merge the two OSS sheets
             df_3g_day = pd.concat([df_3g_day_oss1, df_3g_day_oss2], ignore_index=True).drop(index=1, errors='ignore').reset_index(drop=True)
@@ -291,8 +291,8 @@ if uploaded_file_oss1 and uploaded_file_oss2:
             df_4g_bbh = pd.concat([df_4g_bbh_oss1, df_4g_bbh_oss2], ignore_index=True).drop(index=1, errors='ignore').reset_index(drop=True)
             
             # Read Daily 7-day sheets from two OSS
-            df_4g_day_oss1 = pd.read_excel(xls, sheet_name="4G_N1_Daily")
-            df_4g_day_oss2 = pd.read_excel(xls, sheet_name="4G_N2_Daily")
+            df_4g_day_oss1 = pd.read_excel(xls, sheet_name="4G_N1")
+            df_4g_day_oss2 = pd.read_excel(xls, sheet_name="4G_N2")
             df_4g_day = pd.concat([df_4g_day_oss1, df_4g_day_oss2], ignore_index=True).drop(index=1, errors='ignore').reset_index(drop=True)
             
             # Convert datetime and create DATE column
@@ -410,6 +410,7 @@ if uploaded_file_oss1 and uploaded_file_oss2:
         merged_output.to_excel(towrite, index=False, engine='xlsxwriter')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
