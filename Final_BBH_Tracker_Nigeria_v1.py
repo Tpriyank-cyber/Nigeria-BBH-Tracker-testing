@@ -407,9 +407,10 @@ elif selected == "Tool Name":
         
         # -------------------- DOWNLOAD --------------------
         towrite = BytesIO()
-        merged_output.to_excel(towrite, index=False, engine='xlsxwriter')
+        merged_output.to_excel(towrite, index=False, engine='openpyxl')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
