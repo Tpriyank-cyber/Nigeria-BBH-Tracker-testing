@@ -76,12 +76,12 @@ elif selected == "Tool Name":
     uploaded_file_oss1 = st.file_uploader("Upload Excel File OSS 1", type=["xlsx"], key="oss1")
     uploaded_file_oss2 = st.file_uploader("Upload Excel File OSS 2", type=["xlsx"], key="oss2")
 
-if uploaded_file_oss1 and uploaded_file_oss2:
-    # Read input files separately
-    xls1 = pd.ExcelFile(uploaded_file_oss1)
-    xls2 = pd.ExcelFile(uploaded_file_oss2)
-
-    final_outputs = []
+    if uploaded_file_oss1 and uploaded_file_oss2:
+        # Read input files separately
+        xls1 = pd.ExcelFile(uploaded_file_oss1)
+        xls2 = pd.ExcelFile(uploaded_file_oss2)
+    
+        final_outputs = []
 
 
         
@@ -410,6 +410,7 @@ if uploaded_file_oss1 and uploaded_file_oss2:
         merged_output.to_excel(towrite, index=False, engine='xlsxwriter')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
