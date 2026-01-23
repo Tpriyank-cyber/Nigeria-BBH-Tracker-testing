@@ -62,7 +62,7 @@ if selected == "Contact Us":
     st.markdown("## 📞 Contact Us")
     st.write(
         "**Developer:** Priyank Tomar  \n"
-        "**Domain:** 2G / 3G / LTE / 5G / OSS / KPI Automation   \n"
+        "**Domain:** 2G / 3G / LTE - OSS / KPI Automation   \n"
         "**Email:** tomar.priyank@nokia.com"
     )
 
@@ -413,6 +413,7 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='openpyxl')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
