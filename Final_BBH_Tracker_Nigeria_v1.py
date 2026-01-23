@@ -14,7 +14,7 @@ from streamlit_option_menu import option_menu
 # -------------------- Streamlit Settings --------------------
 favicon = "favicon.png"
 color_1 = "transparent"
-st.set_page_config(page_title="Nokia Parameter Audit Tool", page_icon=favicon, layout="wide")
+st.set_page_config(page_title="Airtel Nigeria BBH Tracker", page_icon=favicon, layout="wide")
 
 background_text_color = "#001135"
 background_header_text_color = "#a235b6"
@@ -24,7 +24,7 @@ background_font_style = "18px"
 # Sidebar Menu
 with st.sidebar:
     selected = option_menu(
-        menu_title="Region Name",
+        menu_title="Airtel Nigeria",
         options=["About", "Tool Name", "Contact Us"],
         icons=["person", "slack", "telephone"],
         menu_icon='None',
@@ -47,13 +47,16 @@ with st.sidebar:
 
 # -------------------- About Page --------------------
 if selected == "About":
-    st.write(f"<span style='color: {background_text_color}; font-weight: bold; font-family: Nokia Pure Headline; font-size: 23px;'>Tool Introduction</span>", unsafe_allow_html=True)
-    st.write(f"<span style='color: {background_text_color}; font-weight: bold; margin-left: 80px; font-family: Nokia Pure Headline Light; font-size: 23px;'>-----content-----</span>", unsafe_allow_html=True)
-    st.write(f"<span style='color: {background_text_color}; font-weight: bold; font-family: Nokia Pure Headline; font-size: 23px; margin-top: 10px;'>Tool Functionality</span>", unsafe_allow_html=True)
-    st.write(f"<span style='color: {background_text_color}; font-weight: bold; margin-left: 80px; font-family: Nokia Pure Headline Light; font-size: 23px;'>-----content-----</span>", unsafe_allow_html=True)
-    st.write(f"<span style='color: {background_text_color}; font-weight: bold; font-family: Nokia Pure Headline; font-size: 23px; margin-top: 10px;'>Tool Workflow</span>", unsafe_allow_html=True)
-    st.write(f"<span style='color: {background_text_color}; font-weight: bold; margin-left: 50px; font-family: Nokia Pure Headline Light; font-size: 23px;'>-----Image(.png/.jpg)-----</span>", unsafe_allow_html=True)
-
+    st.markdown("## ℹ Tool Introduction")
+    st.write(
+        "This Multi-Tech Data BBH Processing tool automates **BBH level KPI aggregation** "
+        "for **Cell views**, enabling faster and accurate OSS-based performance analysis."
+    )
+    st.markdown("## 🚀 Key Capabilities")
+    st.markdown("""
+    - BBH/Day KPI aggregation  
+    - Cell level analysis  
+    """)
 # -------------------- Tool Page --------------------
 elif selected == "Tool Name":
     st.write(f"<span style='color: {background_text_color}; font-weight: bold; font-size:{background_font_style}; font-family: Nokia Pure Headline Light;'>Select Technology & Upload File:</span>", unsafe_allow_html=True)
@@ -393,3 +396,4 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='xlsxwriter')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
