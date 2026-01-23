@@ -71,7 +71,8 @@ elif selected == "Tool Name":
     st.write(f"<span style='color: {background_text_color}; font-weight: bold; font-size:{background_font_style}; font-family: Nokia Pure Headline Light;'>Select Technology & Upload File:</span>", unsafe_allow_html=True)
 
     # Tech selection
-    tech_option = st.selectbox("Select Technology to Process:", ["2G", "3G", "4G", "All"])
+    tech_option = st.selectbox("Airtel Nigeria BBH Tracker:", ["2G", "3G", "4G", "All"])
+    st.write("**Developed by Priyank Tomar**")
     # Multiple uploads for OSS
     uploaded_file_oss1 = st.file_uploader("Upload Excel File OSS 1", type=["xlsx"], key="oss1")
     uploaded_file_oss2 = st.file_uploader("Upload Excel File OSS 2", type=["xlsx"], key="oss2")
@@ -412,6 +413,7 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='openpyxl')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
