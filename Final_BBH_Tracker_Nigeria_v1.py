@@ -282,6 +282,7 @@ elif selected == "Tool Name":
             # Round KPI values
             kpi_cols_3G = [c for c in final_3G.columns if c not in ["WBTS name", "WCEL name", "KPI", "REMARKS"]]
             final_3G[kpi_cols_3G] = final_3G[kpi_cols_3G].apply(pd.to_numeric, errors='coerce').round(2)
+            final_outputs.append(final_3G)
 
         
         # -------------------- 4G Processing --------------------
@@ -399,6 +400,7 @@ elif selected == "Tool Name":
             # Round KPI values
             kpi_cols_4G = [c for c in final_4G.columns if c not in ["LNBTS name", "LNCEL name", "KPI", "REMARKS"]]
             final_4G[kpi_cols_4G] = final_4G[kpi_cols_4G].apply(pd.to_numeric, errors='coerce').round(2)
+            final_outputs.append(final_4G)
 
 
         
@@ -410,6 +412,7 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='openpyxl')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
