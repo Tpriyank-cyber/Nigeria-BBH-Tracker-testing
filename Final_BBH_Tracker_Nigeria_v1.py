@@ -72,14 +72,18 @@ elif selected == "Tool Name":
 
     # Tech selection
     tech_option = st.selectbox("Select Technology to Process:", ["2G", "3G", "4G", "All"])
-    uploaded_file = st.file_uploader("Upload Excel File  OSS 1", type=["xlsx"])
-    uploaded_file = st.file_uploader("Upload Excel File  OSS 2", type=["xlsx"])
+    # Multiple uploads for OSS
+    uploaded_file_oss1 = st.file_uploader("Upload Excel File OSS 1", type=["xlsx"], key="oss1")
+    uploaded_file_oss2 = st.file_uploader("Upload Excel File OSS 2", type=["xlsx"], key="oss2")
 
-    if uploaded_file:
-        # Read input
-        xls = pd.ExcelFile(uploaded_file)
-        
-        final_outputs = []
+if uploaded_file_oss1 and uploaded_file_oss2:
+    # Read input files separately
+    xls1 = pd.ExcelFile(uploaded_file_oss1)
+    xls2 = pd.ExcelFile(uploaded_file_oss2)
+
+    final_outputs = []
+
+
         
         # -------------------- 2G Processing --------------------
         if tech_option in ["2G", "All"]:
@@ -406,6 +410,7 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='xlsxwriter')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
