@@ -57,6 +57,15 @@ if selected == "About":
     - BBH/Day KPI aggregation  
     - Cell level analysis  
     """)
+
+if selected == "Contact Us":
+    st.markdown("## 📞 Contact Us")
+    st.write(
+        "**Developer:** Priyank Tomar  \n"
+        "**Domain:** 2G / 3G / LTE / 5G / OSS / KPI Automation   \n"
+        "**Email:** tomar.priyank@nokia.com"
+    )
+
 # -------------------- Tool Page --------------------
 elif selected == "Tool Name":
     st.write(f"<span style='color: {background_text_color}; font-weight: bold; font-size:{background_font_style}; font-family: Nokia Pure Headline Light;'>Select Technology & Upload File:</span>", unsafe_allow_html=True)
@@ -396,4 +405,5 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='xlsxwriter')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
