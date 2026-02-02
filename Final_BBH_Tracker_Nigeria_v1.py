@@ -429,7 +429,9 @@ elif selected == "Tool Name":
                 return remark
             
             final_4G["REMARKS"] = final_4G.apply(enhanced_remark_4G, axis=1)
-            final_4G[["Layer", "Sector"]] = final_4G["LNCEL name"].apply(lambda x: pd.Series(get_layer_sector(x)))
+            final_4G["LNCEL name"] = final_4G["LNCEL name"].astype(str).str.strip()
+            layers_sectors = final_4G["LNCEL name"].apply(get_layer_sector)
+            final_4G["Layer"], final_4G["Sector"] = zip(*layers_sectors)
             
             # Round KPI values
             kpi_cols_4G = [c for c in final_4G.columns if c not in ["LNBTS name", "LNCEL name", "KPI", "REMARKS"]]
@@ -446,6 +448,7 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='openpyxl')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
