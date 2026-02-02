@@ -16,6 +16,36 @@ favicon = "favicon.png"
 color_1 = "transparent"
 st.set_page_config(page_title="Airtel Nigeria BBH Tracker", page_icon=favicon, layout="wide")
 
+# ============================================================
+# Layer + Sector Mapping
+# ============================================================
+
+sector_layer_map = {
+    "A": ("G900", "Sec-1"), "B": ("G900", "Sec-2"), "C": ("G900", "Sec-3"), "K": ("G900", "Sec-4"), "L": ("G900", "Sec-5"), "T": ("G900", "Sec-6"),
+    "D": ("G1800", "Sec-1"), "E": ("G1800", "Sec-2"), "F": ("G1800", "Sec-3"), "KK": ("G1800", "Sec-4"), "LL": ("G1800", "Sec-5"), "TT": ("G1800", "Sec-6"),
+    "G": ("U2100_F1", "Sec-1"), "H": ("U2100_F1", "Sec-2"), "J": ("U2100_F1", "Sec-3"), "Q": ("U2100_F1", "Sec-4"), "R": ("U2100_F1", "Sec-5"), "S": ("U2100_F1", "Sec-6"),
+    "M": ("U2100_F2", "Sec-1"), "N": ("U2100_F2", "Sec-2"), "P": ("U2100_F2", "Sec-3"), "X": ("U2100_F2", "Sec-4"), "Y": ("U2100_F2", "Sec-5"), "Z": ("U2100_F2", "Sec-6"),
+    "GA": ("L900", "Sec-1"), "GB": ("L900", "Sec-2"), "GC": ("L900", "Sec-3"), "GD": ("L900", "Sec-4"), "GE": ("L900", "Sec-5"), "GF": ("L900", "Sec-6"),
+    "DA": ("L1800", "Sec-1"), "DB": ("L1800", "Sec-2"), "DC": ("L1800", "Sec-3"), "DD": ("L1800", "Sec-4"), "DE": ("L1800", "Sec-5"), "DF": ("L1800", "Sec-6"),
+    "KA": ("L2600_F1", "Sec-1"), "KB": ("L2600_F1", "Sec-2"), "KC": ("L2600_F1", "Sec-3"), "KD": ("L2600_F1", "Sec-4"), "KE": ("L2600_F1", "Sec-5"), "KF": ("L2600_F1", "Sec-6"),
+    "LA": ("L2600_F2", "Sec-1"), "LB": ("L2600_F2", "Sec-2"), "LC": ("L2600_F2", "Sec-3"), "LD": ("L2600_F2", "Sec-4"), "LE": ("L2600_F2", "Sec-5"), "LF": ("L2600_F2", "Sec-6"),
+    "JA": ("L2100", "Sec-1"), "JB": ("L2100", "Sec-2"), "JC": ("L2100", "Sec-3"), "JD": ("L2100", "Sec-4"), "JE": ("L2100", "Sec-5"), "JF": ("L2100", "Sec-6")
+}
+
+def get_layer_sector(cell):
+    if pd.isna(cell):
+        return ("Unknown", "Unknown")
+
+    cell = str(cell)
+
+    for length in [2, 1]:
+        suf = cell[-length:]
+        if suf in sector_layer_map:
+            return sector_layer_map[suf]
+
+    return ("Unknown", "Unknown")
+
+
 background_text_color = "#001135"
 background_header_text_color = "#a235b6"
 background_header_font_style = "18px"
@@ -174,6 +204,7 @@ elif selected == "Tool Name":
                 return remark
             
             final_2G["REMARKS"] = final_2G.apply(enhanced_remark_2G, axis=1)
+            final_2G[["Layer", "Sector"]] = final_2G["Segment Name"].apply(lambda x: pd.Series(get_layer_sector(x)))
             kpi_cols=[c for c in final_2G.columns if c not in ["BSC name","Segment Name","KPI","REMARKS"]]
             final_2G[kpi_cols]=final_2G[kpi_cols].apply(pd.to_numeric, errors='coerce').round(2)
             final_outputs.append(final_2G)
@@ -279,6 +310,7 @@ elif selected == "Tool Name":
                 return remark
             
             final_3G["REMARKS"] = final_3G.apply(enhanced_remark_3G, axis=1)
+            final_3G[["Layer", "Sector"]] = final_3G["WCEL name"].apply(lambda x: pd.Series(get_layer_sector(x)))
             
             # Round KPI values
             kpi_cols_3G = [c for c in final_3G.columns if c not in ["WBTS name", "WCEL name", "KPI", "REMARKS"]]
@@ -397,6 +429,7 @@ elif selected == "Tool Name":
                 return remark
             
             final_4G["REMARKS"] = final_4G.apply(enhanced_remark_4G, axis=1)
+            final_4G[["Layer", "Sector"]] = final_4G["LNCEL name"].apply(lambda x: pd.Series(get_layer_sector(x)))
             
             # Round KPI values
             kpi_cols_4G = [c for c in final_4G.columns if c not in ["LNBTS name", "LNCEL name", "KPI", "REMARKS"]]
@@ -413,6 +446,7 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='openpyxl')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
