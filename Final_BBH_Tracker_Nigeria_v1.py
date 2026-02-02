@@ -34,16 +34,22 @@ sector_layer_map = {
 
 def get_layer_sector(cell):
     if pd.isna(cell):
-        return ("Unknown", "Unknown")
+        return ("", "")
 
-    cell = str(cell)
+    cell = str(cell).strip().upper()
 
-    for length in [2, 1]:
-        suf = cell[-length:]
-        if suf in sector_layer_map:
-            return sector_layer_map[suf]
+    # 🚫 skip numeric-only values (1,2,3...)
+    if cell.isdigit():
+        return ("", "")
 
-    return ("Unknown", "Unknown")
+    # 🚫 skip very short strings
+    if len(cell) < 3:
+        return ("", "")
+
+    # ✅ only last 2 letters mapping (ZTCOW2DC → DC)
+    suf = cell[-2:]
+
+    return sector_layer_map.get(suf, ("", ""))
 
 
 background_text_color = "#001135"
@@ -448,6 +454,7 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='openpyxl')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
