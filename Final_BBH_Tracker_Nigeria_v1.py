@@ -32,24 +32,24 @@ sector_layer_map = {
     "JA": ("L2100", "Sec-1"), "JB": ("L2100", "Sec-2"), "JC": ("L2100", "Sec-3"), "JD": ("L2100", "Sec-4"), "JE": ("L2100", "Sec-5"), "JF": ("L2100", "Sec-6")
 }
 
-def get_layer_sector(cell):
-    if pd.isna(cell):
-        return ("", "")
-
-    cell = str(cell).strip().upper()
-
-    # 🚫 skip numeric-only values (1,2,3...)
-    if cell.isdigit():
-        return ("", "")
-
-    # 🚫 skip very short strings
-    if len(cell) < 3:
-        return ("", "")
-
-    # ✅ only last 2 letters mapping (ZTCOW2DC → DC)
-    suf = cell[-2:]
-
-    return sector_layer_map.get(suf, ("", ""))
+    def get_layer_sector(cell):
+        if pd.isna(cell):
+            return ("", "")
+    
+        cell = str(cell).strip().upper()
+    
+        # 🚫 skip numeric-only values (1,2,3...)
+        if cell.isdigit():
+            return ("", "")
+    
+        # 🚫 skip very short strings
+        if len(cell) < 3:
+            return ("", "")
+    
+        # ✅ only last 2 letters mapping (ZTCOW2DC → DC)
+        suf = cell[-2:]
+    
+        return sector_layer_map.get(suf, ("", ""))
 
 
 background_text_color = "#001135"
@@ -454,6 +454,7 @@ elif selected == "Tool Name":
         merged_output.to_excel(towrite, index=False, engine='openpyxl')
         towrite.seek(0)
         st.download_button(label="Download Processed KPI Excel", data=towrite, file_name="Processed_KPIs.xlsx", mime="application/vnd.ms-excel")
+
 
 
 
